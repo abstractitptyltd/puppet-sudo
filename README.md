@@ -81,6 +81,9 @@ whether you want the user to supply a password or not  (defaults to false)
 
 #### `comment`
 
+Interted above the rule to explain what it does
+
+
     sudo::cmnd { "SYSTEMD":
       ensure => present, # whether the rule should exist or not (present is the default)
       what => '/usr/sbin/systemctl', # can also be an array of commands
@@ -88,31 +91,27 @@ whether you want the user to supply a password or not  (defaults to false)
       comment => "what ever you like",
     }
 
-### sudo::rule
+### sudo::cmnd
 
-This type manages extra rules for sudo
+This type manages extra command sets for sudo
 
-**Parameters within sudo::rule**
+**Parameters within sudo::cmnd**
 
 #### `ensure`
 
-Whether the rule should exist or not (present is the default)
+Whether the cmnd set should exist or not (present is the default)
 
-#### `who`
+#### `what`
 
-The user running the command
+Commands in this set, can be a variable or an array.
 
-#### `commands`
+#### `cmnd`
 
-can also be an array of commands for this rule
-
-#### `nopass`
-
-whether you want the user to supply a password or not  (defaults to false)
+Name for this command set
 
 #### `comment`
 
-Interted above the rule to explain what it does
+Interted above the cmnd to explain what it does
 
     sudo::host { "office":
       ensure => present, # whether the rule should exist or not (present is the default)
@@ -120,29 +119,23 @@ Interted above the rule to explain what it does
       comment => "what ever you like",
     }
 
-### sudo::rule
+### sudo::host
 
-This type manages extra rules for sudo
+This type manages host groups for sudo
 
-**Parameters within sudo::rule**
+**Parameters within sudo::host**
 
 #### `ensure`
 
-Whether the rule should exist or not (present is the default)
+Whether the host group should exist or not (present is the default)
 
-#### `who`
+#### `where`
 
-The user running the command
-
-#### `commands`
-
-can also be an array of commands for this rule
-
-#### `nopass`
-
-whether you want the user to supply a password or not  (defaults to false)
+Host or array of hosts in this group
 
 #### `comment`
+
+Description of this host group
 
     sudo::runas { "whoever":
       ensure => present, # whether the rule should exist or not (present is the default)
@@ -150,29 +143,24 @@ whether you want the user to supply a password or not  (defaults to false)
       comment => "what ever you like",
     }
 
-### sudo::rule
+### sudo::runas
 
-This type manages extra rules for sudo
+This type manages extra runas groups for sudo
 
-**Parameters within sudo::rule**
+**Parameters within sudo::runas**
 
 #### `ensure`
 
-Whether the rule should exist or not (present is the default)
+Whether the runas group should exist or not (present is the default)
 
 #### `who`
 
-The user running the command
-
-#### `commands`
-
-can also be an array of commands for this rule
-
-#### `nopass`
-
-whether you want the user to supply a password or not  (defaults to false)
+who this group contains, can be a variable or an array
 
 #### `comment`
+
+Description of this runas group 
+
 
 Implementation
 --------------
