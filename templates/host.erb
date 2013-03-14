@@ -1,0 +1,6 @@
+
+<% if comment -%>
+#
+# <%= comment %>
+<% end -%>
+Host_Alias <%= name.upercase %> = <%= where.class == Array ? where.join(", ") : where %>

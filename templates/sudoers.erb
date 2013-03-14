@@ -1,0 +1,87 @@
+#######
+# this file is managed by puppet
+# changed will be overwritten on the next puppet run
+# you have been warned
+#######
+
+Defaults  env_reset
+Defaults  secure_path="<% if @extra_path %><%= @extra_path.class == Array ? @extra_path.join(":") : @extra_path %><% end %>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+## Runas Aliases
+Runas_Alias ROOT = root
+Runas_Alias BACKUP = amandabackup
+
+## Command Aliases
+Cmnd_Alias SHELLS = /bin/sh,/bin/bash,/bin/tcsh,/bin/csh<% if @extra_shells %><%= @extra_shells.class == Array ? @extra_shells.join(",") : @extra_shells %><% end %>
+Cmnd_Alias SU = /bin/su,/usr/sbin/visudo
+Cmnd_Alias SHUTDOWN = /sbin/halt,/usr/sbin/pm-hibernate,/usr/sbin/pm-suspend,/sbin/shutdown,/sbin/init
+
+## Networking
+Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+
+## Installation and management of software
+Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum, /usr/bin/apt-get, /usr/bin/aptitude
+
+## Services
+Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl
+
+## Updating the locate database
+Cmnd_Alias LOCATE = /usr/bin/updatedb
+
+## Storage
+Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+## Delegating permissions
+Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp 
+
+## Processes
+Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+
+## Drivers
+Cmnd_Alias DRIVERS = /sbin/modprobe
+
+Cmnd_Alias BACKUP = /usr/bin/rsync
+
+# Defaults specification
+
+# Disable "ssh hostname sudo <cmd>", because it will show the password in clear. 
+#         You have to run "ssh -t hostname sudo <cmd>".
+#
+<% if scope.lookupvar('sudo::params::requiretty') == true %>Defaults    requiretty<% end %>
+
+# Refuse to run if unable to disable echo on the tty. This setting should also be                                                                            # changed in order to be able to use sudo without a tty. See requiretty above.                                                                                                     
+#
+Defaults   !visiblepw                                                                                                                                                              
+                                                                                                                                                                                   
+#
+# Preserving HOME has security implications since many programs
+# use it when searching for configuration files.
+#                                                                                                                                                                                  
+Defaults    always_set_home
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+Defaults    env_reset
+Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
+                        LS_COLORS MAIL PS1 PS2 QTDIR USERNAME \
+                        LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION \
+                        LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME LC_NUMERIC \
+                        LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS \
+                        _XKB_CHARSET XAUTHORITY"
+
+## Allow root to run any commands anywhere 
+root	ALL=(ALL) 	ALL
+
+## Allows members of the 'sys' group to run networking, software, 
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group <%= sudo_fullaccess_group %> to run all commands
+%<%= sudo_fullaccess_group %>  ALL=(ALL)  ALL
+
+<% if extra_full_sudo_users != [] -%>
+<% extra_full_sudo_users.each do |user| -%>
+<%= user %> ALL=(ALL) ALL , !SHELLS, !SU, !SHUTDOWN
+<% end -%>
+<% end -%>
+

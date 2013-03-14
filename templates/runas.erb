@@ -1,0 +1,6 @@
+
+<% if comment -%>
+#
+# <%= comment %>
+<% end -%>
+Runas_Alias <%= name.upercase %> = <%= who.class == Array ? who.join(", ") : who %>
