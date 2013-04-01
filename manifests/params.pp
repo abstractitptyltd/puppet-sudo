@@ -6,6 +6,6 @@ class sudo::params (
 )
 {
   $rulesfile = '/etc/sudoers'
-  $is_pbx = hiera(is_pbx)
+  $is_pbx = hiera(is_pbx, false)
   $sudo_fullaccess_group = $operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
 }
