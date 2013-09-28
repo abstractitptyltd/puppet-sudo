@@ -1,7 +1,7 @@
 
-<% if comment -%>
+<% if @comment -%>
 #
-# <%= comment %>
+# <%= @comment %>
 <% end -%>
-<%= who %>	<%= servers %> = (<%= runas %>) <% if nopass == true %>NOPASSWD:<% end %> <%= commands %>
+<%= @who %>	<%= @servers %> = (<%= @runas %>) <% if @nopass == true %>NOPASSWD:<% end %> <%= @commands %>
 
