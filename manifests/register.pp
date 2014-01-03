@@ -4,9 +4,9 @@ define sudo::register( $ensure = present, $content = "", $order = 20 ) {
   include concat::setup
 
   concat::fragment{"sudo_fragment_${name}":
-    ensure => $ensure,
-    target => $sudo::params::rulesfile,
+    ensure  => $ensure,
+    target  => $sudo::params::rulesfile,
     content => $content,
-    order => $order,
+    order   => $order,
   }
 }

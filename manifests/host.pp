@@ -1,12 +1,12 @@
 define sudo::host (
-  $ensure = present,
   $where,
+  $ensure = present,
   $comment = undef,
 ) {
 
   sudo::register{"host_${name}":
-    ensure => $ensure,
+    ensure  => $ensure,
     content => template('sudo/host.erb'),
-    order => 30,
+    order   => 30,
   }
 }

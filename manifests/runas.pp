@@ -1,12 +1,12 @@
 define sudo::runas (
-  $ensure = present,
   $who,
+  $ensure = present,
   $comment = undef,
 ) {
 
   sudo::register{"runas_${name}":
-    ensure => $ensure,
+    ensure  => $ensure,
     content => template('sudo/runas.erb'),
-    order => 30,
+    order   => 30,
   }
 }

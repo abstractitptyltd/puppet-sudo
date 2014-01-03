@@ -6,5 +6,5 @@ class sudo::params (
 )
 {
   $rulesfile = '/etc/sudoers'
-  $sudo_fullaccess_group = $operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
+  $sudo_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
 }

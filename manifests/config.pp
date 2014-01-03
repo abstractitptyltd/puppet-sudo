@@ -11,12 +11,12 @@ class sudo::config {
   concat{$sudo::params::rulesfile:
     owner => root,
     group => root,
-    mode => 400,
+    mode  => '0400',
   }
   sudo::register{ 'sudo_header':
-    ensure => present,
-    content => template("sudo/sudoers.erb"),
-    order => 10,
+    ensure  => present,
+    content => template('sudo/sudoers.erb'),
+    order   => 10,
   }
 
 }

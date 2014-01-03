@@ -1,13 +1,13 @@
 define sudo::cmnd (
-  $ensure = present,
   $what,
   $cmnd,
+  $ensure = present,
   $comment = undef,
 ) {
 
   sudo::register{"cmnd_${name}":
-    ensure => $ensure,
+    ensure  => $ensure,
     content => template('sudo/cmnd.erb'),
-    order => 30,
+    order   => '30',
   }
 }
