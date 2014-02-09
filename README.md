@@ -45,6 +45,8 @@ This will manage a basic setup for sudo.
 Defaults for vars to set if you need them.
 These are class params so use hiera or and ENC to set them up easily.
 
+    $sudo::params::full_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
+    # group of users with full sudo access
     $sudo::params::extra_full_sudo_users = [] 
     # array of extra users with full sudo access except shells and su itself
     $sudo::params::requiretty = false
@@ -188,6 +190,11 @@ If you wish to join in let me know.
 
 Release Notes
 -------------
+
+**1.1.2**
+
+moved `sudo_fullaccess_group` into class vars for sudo::params
+include sudo in sudo::register class to make sure it gets loaded
 
 **1.0.0**
 
