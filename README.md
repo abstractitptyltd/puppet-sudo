@@ -196,6 +196,11 @@ If you wish to join in let me know.
 Release Notes
 -------------
 
+**1.1.3**
+
+updated documentation for sudo::rule
+fixed mode for /etc/sudoers file to stop constant changes
+
 **1.1.2**
 
 moved `sudo_fullaccess_group` into class vars for sudo::params

@@ -11,7 +11,7 @@ class sudo::config {
   concat{$sudo::params::rulesfile:
     owner => root,
     group => root,
-    mode  => '0400',
+    mode  => '0440',
   }
   sudo::register{ 'sudo_header':
     ensure  => present,
