@@ -60,11 +60,12 @@ Usage
 -----
 
     sudo::rule { "extra_rule":
-      ensure => present, 
-      who => 'bob', 
+      ensure   => present, 
+      who      => 'bob', 
+      runas    => 'root', # default runas user is root, please change to override.
       commands => "/usr/sbin/systemctl",
-      nopass => false, # 
-      comment => "what ever you like",
+      nopass   => false, # 
+      comment  => "what ever you like",
     }
 
 ### sudo::rule
@@ -80,6 +81,10 @@ Whether the rule should exist or not (present is the default)
 #### `who`
 
 The user running the command
+
+#### `runas`
+
+The user to run commands as (Default is root)
 
 #### `commands`
 
