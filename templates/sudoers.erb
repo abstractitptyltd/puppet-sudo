@@ -76,11 +76,11 @@ root	ALL=(ALL) 	ALL
 ## service management apps and more.
 # %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
 
-## Allows people in group <%= sudo_fullaccess_group %> to run all commands
-%<%= sudo_fullaccess_group %>  ALL=(ALL)  ALL
+## Allows people in group <%= @sudo_fullaccess_group %> to run all commands
+%<%= @sudo_fullaccess_group %>  ALL=(ALL)  ALL
 
-<% if extra_full_sudo_users != [] -%>
-<% extra_full_sudo_users.each do |user| -%>
+<% if @extra_full_sudo_users != [] -%>
+<% @extra_full_sudo_users.each do |user| -%>
 <%= user %> ALL=(ALL) ALL , !SHELLS, !SU, !SHUTDOWN
 <% end -%>
 <% end -%>
