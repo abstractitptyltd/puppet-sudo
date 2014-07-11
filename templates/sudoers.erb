@@ -59,8 +59,11 @@ Defaults   !visiblepw
 #                                                                                                                                                                                  
 Defaults    always_set_home
 
-Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+<% if scope.lookupvar('sudo::params::secure_path') %>
+    Defaults    secure_path = <%= scope.lookupvar('sudo::params::secure_path') %>
+<% end %>
 
+<% if scope.lookupvar('sudo::params::env_reset') == true %>
 Defaults    env_reset
 Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
                         LS_COLORS MAIL PS1 PS2 QTDIR USERNAME \
@@ -68,6 +71,7 @@ Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
                         LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME LC_NUMERIC \
                         LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS \
                         _XKB_CHARSET XAUTHORITY"
+<% end %>
 
 ## Allow root to run any commands anywhere 
 root	ALL=(ALL) 	ALL
