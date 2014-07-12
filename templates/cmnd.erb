@@ -1,6 +1,6 @@
 
-<% if comment -%>
+<% if @comment -%>
 #
-# <%= comment %>
+# <%= @comment %>
 <% end -%>
 Cmnd_Alias <%= @cmnd %> = <%= @what.class == Array ? @what.join(", ") : @what %>
