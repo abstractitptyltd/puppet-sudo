@@ -55,6 +55,10 @@ These are class params so use hiera or and ENC to set them up easily.
     # extra path to include before the default
     $sudo::params::extra_shells = undef
     # extra shells on the node
+    $sudo::params::env_reset = true
+    # If the shell environment should be reset on sudo
+    $sudo::params::secure_path = '/sbin:/bin:/usr/sbin:/usr/bin'
+    # Force the PATH to be this, set to false to stop setting path
 
 Usage
 -----
