@@ -6,6 +6,7 @@ define sudo::rule (
   $comment = undef,
   $runas = 'root',
   $nopass = false,
+  $setenv = false,
 ) {
 
   sudo::register{"rule_${name}":

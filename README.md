@@ -68,7 +68,8 @@ Usage
       who      => 'bob', 
       runas    => 'root', # default runas user is root, please change to override.
       commands => "/usr/sbin/systemctl",
-      nopass   => false, # 
+      nopass   => false, #
+      setenv   => false,
       comment  => "what ever you like",
     }
 
@@ -97,6 +98,10 @@ can also be an array of commands for this rule
 #### `nopass`
 
 whether you want the user to supply a password or not  (defaults to false)
+
+#### `setenv`
+
+whether you want to set the SETENV tag  (defaults to false)
 
 #### `comment`
 
