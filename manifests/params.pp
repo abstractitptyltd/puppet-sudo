@@ -5,7 +5,7 @@ class sudo::params (
   $extra_shells = undef,
   $sudo_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' },
   $env_reset = true,
-  $secure_path = true
+  $secure_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 )
 {
   $rulesfile = '/etc/sudoers'

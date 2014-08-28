@@ -3,5 +3,5 @@
 #
 # <%= @comment %>
 <% end -%>
-<%= @who %>	<%= @servers %> = (<%= @runas %>) <% if @nopass == true %>NOPASSWD:<% end %> <%= @commands %>
+<%= @who %>	<%= @servers %> = (<%= @runas %>) <% if @nopass == true %>NOPASSWD:<% end %><% if @setenv == true %>SETENV:<% end %> <%= @commands %>
 
