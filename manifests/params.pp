@@ -1,4 +1,5 @@
 class sudo::params (
+  $sudoers_dot_d = false,
   $extra_full_sudo_users = [],
   $requiretty = false,
   $extra_path = undef,

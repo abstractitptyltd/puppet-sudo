@@ -4,10 +4,10 @@
 # you have been warned
 #######
 
-<% if scope.lookupvar('sudo::params::env_reset') == true %>
+<% if @env_reset == true %>
 Defaults  env_reset
 <% end %>
-<% if scope.lookupvar('sudo::params::secure_path') %>
+<% if @secure_path %>
 Defaults  secure_path="<% if @extra_path %><%= @extra_path.class == Array ? @extra_path.join(":") : @extra_path %><% end %>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 <% end %>
 
@@ -16,7 +16,7 @@ Runas_Alias ROOT = root
 Runas_Alias BACKUP = amandabackup
 
 ## Command Aliases
-Cmnd_Alias SHELLS = /bin/sh,/bin/bash,/bin/tcsh,/bin/csh<% if @extra_shells %><%= @extra_shells.class == Array ? @extra_shells.join(",") : @extra_shells %><% end %>
+Cmnd_Alias SHELLS = /bin/sh,/bin/bash,/bin/tcsh,/bin/csh<% if @extra_shells %>,<%= @extra_shells.class == Array ? @extra_shells.join(",") : @extra_shells %><% end %>
 Cmnd_Alias SU = /bin/su,/usr/sbin/visudo
 Cmnd_Alias SHUTDOWN = /sbin/halt,/usr/sbin/pm-hibernate,/usr/sbin/pm-suspend,/sbin/shutdown,/sbin/init
 
@@ -51,7 +51,7 @@ Cmnd_Alias BACKUP = /usr/bin/rsync
 # Disable "ssh hostname sudo <cmd>", because it will show the password in clear. 
 #         You have to run "ssh -t hostname sudo <cmd>".
 #
-<% if scope.lookupvar('sudo::params::requiretty') == true %>Defaults    requiretty<% end %>
+<% if @requiretty == true %>Defaults    requiretty<% end %>
 
 # Refuse to run if unable to disable echo on the tty. This setting should also be                                                                            # changed in order to be able to use sudo without a tty. See requiretty above.                                                                                                     
 #
@@ -63,11 +63,11 @@ Defaults   !visiblepw
 #                                                                                                                                                                                  
 Defaults    always_set_home
 
-<% if scope.lookupvar('sudo::params::secure_path') %>
-    Defaults    secure_path = <%= scope.lookupvar('sudo::params::secure_path') %>
+<% if @secure_path %>
+    Defaults    secure_path = <%= @secure_path %>
 <% end %>
 
-<% if scope.lookupvar('sudo::params::env_reset') == true %>
+<% if @env_reset == true %>
 Defaults    env_reset
 Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
                         LS_COLORS MAIL PS1 PS2 QTDIR USERNAME \
@@ -78,7 +78,7 @@ Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
 <% end %>
 
 ## Allow root to run any commands anywhere 
-root	ALL=(ALL) 	ALL
+root	ALL=(ALL:ALL) 	ALL
 
 ## Allows members of the 'sys' group to run networking, software, 
 ## service management apps and more.
@@ -93,3 +93,6 @@ root	ALL=(ALL) 	ALL
 <% end -%>
 <% end -%>
 
+<%- if @sudoers_dot_d -%>
+#includedir /etc/sudoers.d
+<%- end -%>

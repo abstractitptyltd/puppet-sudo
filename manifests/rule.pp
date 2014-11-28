@@ -3,7 +3,7 @@ define sudo::rule (
   $ensure = present,
   $commands = 'ALL',
   $servers = 'ALL',
-  $comment = undef,
+  $comment = '',
   $runas = 'root',
   $nopass = false,
   $setenv = false,

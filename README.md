@@ -16,6 +16,9 @@ abstractit-sudo
 New stuff and bug fixes
 -----------------------
 
+I am moving away from using sudo::params as the primary API for the module and moving towards being able to define the classes resource style.
+Due to my recent foray into Vagrant, OpenStack and cloud-init I have added support for sudoers.d. It is disabled by default but I will be working towards enabling it for cloud-init and vagrant systems.
+
 I recently started a consulting company called Abstract IT Pty Ltd. I have transfered ownership of all my puppet modules to a new organisation on Puppet Forge called abstractit.
 I am making one final release of my modules under rendhalver and abstractit to give you a chance to switch over to the new organisation.
 I have also added a licence. All my modules will be licenced under Apache v2.
@@ -43,8 +46,32 @@ This will manage a basic setup for sudo.
     include sudo
 
 Defaults for vars to set if you need them.
-These are class params so use hiera or and ENC to set them up easily.
+These are class variables so use hiera or and ENC to set them up easily.
 
+Using sudo class
+
+    $sudo::sudoers_dot_d = false
+    # Whether to file in include sudoers.d 
+    $sudo::full_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
+    # group of users with full sudo access
+    $sudo::extra_full_sudo_users = [] 
+    # array of extra users with full sudo access except shells and su itself
+    $sudo::requiretty = false
+    # whether you want a tty to exist for sudo ( I leave this unset because my monitoring setup uses sudo for some of it's commands )
+    $sudo::extra_path = undef
+    # extra path to include before the default
+    $sudo::extra_shells = undef
+    # extra shells on the node
+    $sudo::env_reset = true
+    # If the shell environment should be reset on sudo
+    $sudo::secure_path = '/sbin:/bin:/usr/sbin:/usr/bin'
+    # Force the PATH to be this, set to false to stop setting path
+
+Using sudo::params class variables.
+This method will go away soon so please migrate to using sudo variables
+
+    $sudo::params::sudoers_dot_d = false
+    # Whether to file in include sudoers.d 
     $sudo::params::full_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
     # group of users with full sudo access
     $sudo::params::extra_full_sudo_users = [] 
@@ -204,6 +231,17 @@ If you wish to join in let me know.
 
 Release Notes
 -------------
+
+**1.2.0**
+
+Bugfixes: template variables (@bobtfish and @rfay)
+Bugfix: extra_shells wasn't adding a , for path separation (@rendhalver)
+Adding support for secure_path and env_reset (@bobtfish)
+Adding support for setenv in sudo::rule (@aholen)
+Adding support for sudoers.d (@rendhalver)
+Allowing an array of commands in sudo::rule
+Initial changes to move away from params being the primary API
+Adding metadata.json to work with newer versions of puppet module
 
 **1.1.3**
 

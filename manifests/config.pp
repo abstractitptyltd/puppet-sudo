@@ -1,14 +1,17 @@
 
 class sudo::config {
 
-  include sudo::params
-  $extra_path = $sudo::params::extra_path
-  $extra_shells = $sudo::params::extra_shells
-  $sudo_fullaccess_group = $sudo::params::sudo_fullaccess_group
-  $extra_full_sudo_users = $sudo::params::extra_full_sudo_users
-  $requiretty = $sudo::params::requiretty
+  include ::sudo
 
-  concat{$sudo::params::rulesfile:
+  $sudoers_dot_d = $sudo::sudoers_dot_d
+  $extra_path = $sudo::extra_path
+  $extra_shells = $sudo::extra_shells
+  $sudo_fullaccess_group = $sudo::sudo_fullaccess_group
+  $extra_full_sudo_users = $sudo::extra_full_sudo_users
+  $requiretty = $sudo::requiretty
+  $rulesfile = $sudo::rulesfile
+
+  concat{$rulesfile:
     owner => root,
     group => root,
     mode  => '0440',
@@ -20,4 +23,3 @@ class sudo::config {
   }
 
 }
-
