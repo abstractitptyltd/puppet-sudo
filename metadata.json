@@ -1,11 +1,11 @@
 {
   "name": "abstractit-sudo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Abstract IT",
   "license": "Apache v2 Licence",
   "summary": "secure extensible sudo setup for puppet",
   "source": "https://github.com/abstractitptyltd/puppet-sudo",
-  "project_page": "(https://github.com/abstractitptyltd/puppet-sudo)",
+  "project_page": "https://github.com/abstractitptyltd/puppet-sudo",
   "issues_url": "https://github.com/abstractitptyltd/puppet-sudo/issues",
   "tags": ["sudo"],
   "operatingsystem_support": [
