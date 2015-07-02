@@ -5,5 +5,5 @@
 <% end -%>
 <%= @who %> <%= @servers %> = (<%= @runas %>) <% if @nopass == true %>NOPASSWD:<% end %><% if @setenv == true %>SETENV:<% end %> <%= @commands.class == Array ? @commands.join(", ") : @commands %>
 <% if @requiretty == false -%>
-Defaults:<= @who %> !requiretty
+Defaults:<%= @who %> !requiretty
 <% end -%>
