@@ -4,6 +4,7 @@ define sudo::rule (
   $commands = 'ALL',
   $servers = 'ALL',
   $comment = '',
+  $requiretty = true,
   $runas = 'root',
   $nopass = false,
   $setenv = false,
