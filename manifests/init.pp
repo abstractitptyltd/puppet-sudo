@@ -10,9 +10,9 @@ class sudo (
   $env_reset = $sudo::params::env_reset,
   $secure_path = $sudo::params::secure_path,
   $rulesfile = $sudo::params::rulesfile
-) inherits sudo::params {
-  include sudo::install
-  include sudo::config
+) inherits ::sudo::params {
+  include ::sudo::install
+  include ::sudo::config
   Class[sudo::install] -> Class[sudo::config]
 }
 

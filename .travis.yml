@@ -1,0 +1,48 @@
+language: ruby
+sudo: false
+bundler_args: --without development
+before_install: rm Gemfile.lock || true
+rvm:
+- 1.9
+- 2.0
+- 2.1
+script: bundle exec rake test
+env:
+- PUPPET_VERSION="~> 3.6.0" STRICT_VARIABLES=true
+- PUPPET_VERSION="~> 3.7.0" STRICT_VARIABLES=true
+- PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=true
+- PUPPET_VERSION="~> 3.8.0" STRICT_VARIABLES=true PARSER="future"
+- PUPPET_VERSION="~> 4.0.0" STRICT_VARIABLES=true
+- PUPPET_VERSION="~> 4.1.0" STRICT_VARIABLES=true
+- PUPPET_VERSION="~> 4.2.0" STRICT_VARIABLES=true
+matrix:
+  exclude:
+  - rvm: 1.9
+    env: PUPPET_VERSION="~> 4.0.0" STRICT_VARIABLES=true
+  - rvm: 1.9
+    env: PUPPET_VERSION="~> 4.1.0" STRICT_VARIABLES=true
+  - rvm: 1.9
+    env: PUPPET_VERSION="~> 4.2.0" STRICT_VARIABLES=true
+  - rvm: 2.0
+    env: PUPPET_VERSION="~> 4.0.0" STRICT_VARIABLES=true
+  - rvm: 2.0
+    env: PUPPET_VERSION="~> 4.1.0" STRICT_VARIABLES=true
+  - rvm: 2.0
+    env: PUPPET_VERSION="~> 4.2.0" STRICT_VARIABLES=true
+notifications:
+  slack:
+    secure: Bgqq8f5Ej+g78Iy8o0HSexx4OyCrO2eNrSiev8O8FCB2zQSNZ82EUnuXwDq5LeHJZb3eTBM/6NcAYeXRNuHwgniQQef9xiHC8uBvV3pMstAe5pa+9l7OaXzKyMrVhbjUfqZUhnRYPHY+OYgUMb4UfotfxvRCduPj1YhMrSVXocs=
+    on_success: always
+    on_failure: always
+    on_start: always
+deploy:
+  provider: puppetforge
+  user: abstractit
+  password:
+    secure: ZbtzOD15CmlaLJ0zK2qwLLaqXDk+Ile/2nGwZQ3pV5+cx6ILBVHN/cH0PaddVM9z2bV8k/sHN9ZCe5NXEyC54Vta8jCgLvIckS0tRqNICagn5BMhyEg5jSP7IIDhM9pWgF9KiJyMtx+8iWIt6h7v5+HbOylUuSUyhA0ewpFp2GA=
+  on:
+    tags: true
+    rvm: 2.1
+    condition:
+    - $PUPPET_VERSION = '~> 4.2.0'
+    - $STRICT_VARIABLES = true
