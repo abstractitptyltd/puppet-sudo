@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe 'sudo::register', :type => :define do
+  let(:pre_condition){ 'class{"sudo":}'}
   on_supported_os({
       :hardwaremodels => ['x86_64'],
       :supported_os   => [
@@ -28,17 +29,16 @@ describe 'sudo::register', :type => :define do
       end
 
       context 'when fed no parameters' do
-        # let (:title) { 'my_cmnd'}
-        # let (:params) {{ 'what' => 'my_val','cmnd' => 'my_command', 'ensure' => 'present', 'comment' => 'blah blah'}}
-        # it 'should lay down our fact file as expected' do
-        #   should contain_file("#{facterbasepath}/facts.d/my_fact.yaml").with({
-        #     :path=>"#{facterbasepath}/facts.d/my_fact.yaml",
-        #     :ensure=>"present",
-        #     :owner=>"root",
-        #     :group=>"puppet",
-        #     :mode=>"0640"
-        #   }).with_content("# custom fact my_fact\n---\nmy_fact: \"my_val\"\n")
-        # end
+        let (:title) { 'my_register'}
+        let (:params) {{ 'ensure' => 'present','content' => 'my_content', 'order' => '20'}}
+        it 'should create our concat::fragment as expected' do
+          should contain_concat__fragment("sudo_fragment_my_register").with({
+            :ensure  =>"present",
+            :target  =>"/etc/sudoers",
+            :content =>"my_content",
+            :order   =>"20"
+          })
+        end
       end#no params
 
     end

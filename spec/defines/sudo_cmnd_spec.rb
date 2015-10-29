@@ -28,17 +28,15 @@ describe 'sudo::cmnd', :type => :define do
       end
 
       context 'when fed no parameters' do
-        # let (:title) { 'my_cmnd'}
-        # let (:params) {{ 'what' => 'my_val','cmnd' => 'my_command', 'ensure' => 'present', 'comment' => 'blah blah'}}
-        # it 'should lay down our fact file as expected' do
-        #   should contain_file("#{facterbasepath}/facts.d/my_fact.yaml").with({
-        #     :path=>"#{facterbasepath}/facts.d/my_fact.yaml",
-        #     :ensure=>"present",
-        #     :owner=>"root",
-        #     :group=>"puppet",
-        #     :mode=>"0640"
-        #   }).with_content("# custom fact my_fact\n---\nmy_fact: \"my_val\"\n")
-        # end
+        let (:title) { 'my_cmnd'}
+        let (:params) {{ 'what' => 'foo bar', 'cmnd' => 'foo_cmnd','ensure' => 'present','comment' => 'blah blah'}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("cmnd_my_cmnd").with({
+            :ensure  => "present",
+            :content => "\n#\n# blah blah\nCmnd_Alias foo_cmnd = foo bar\n",
+            :order   => "30"
+          })
+        end
       end#no params
 
     end
