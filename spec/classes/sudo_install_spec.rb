@@ -29,6 +29,10 @@ describe 'sudo::install' do
       it { is_expected.to compile.with_all_deps }
       context 'when fed no parameters' do
         it { should create_class('sudo::install') }
+
+        it 'should install the sudo package' do
+          should contain_package('sudo')
+        end
       end#no params
     end
   end

@@ -30,6 +30,14 @@ describe 'sudo' do
       it { is_expected.to compile.with_all_deps }
       context 'when fed no parameters' do
         it { should create_class('sudo') }
+
+        it 'should contain the sudo::install class' do
+          should contain_class('sudo::install')
+        end
+
+        it 'should contain the sudo::config class' do
+          should contain_class('sudo::config')
+        end
       end#no params
     end
   end

@@ -1,6 +1,5 @@
-
 <% if @comment -%>
 #
 # <%= @comment %>
 <% end -%>
-Runas_Alias <%= @name.upercase %> = <%= @who.class == Array ? @who.join(", ") : @who %>
+Runas_Alias <%= @name.upcase %> = <%= @who.class == Array ? @who.join(", ") : @who %>

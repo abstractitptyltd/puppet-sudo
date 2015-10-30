@@ -27,19 +27,53 @@ describe 'sudo::host', :type => :define do
         })
       end
 
-      context 'when fed no parameters' do
-        # let (:title) { 'my_host'}
-        # let (:params) {{ 'what' => 'my_val','host' => 'my_command', 'ensure' => 'present', 'comment' => 'blah blah'}}
-        # it 'should lay down our fact file as expected' do
-        #   should contain_file("#{facterbasepath}/facts.d/my_fact.yaml").with({
-        #     :path=>"#{facterbasepath}/facts.d/my_fact.yaml",
-        #     :ensure=>"present",
-        #     :owner=>"root",
-        #     :group=>"puppet",
-        #     :mode=>"0640"
-        #   }).with_content("# custom fact my_fact\n---\nmy_fact: \"my_val\"\n")
-        # end
+      context 'when called with base options' do
+        let (:title) { 'my_host'}
+        let (:params) {{ 'where' => 'host1'}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("host_my_host").with({
+            :ensure  => "present",
+            :content => "Host_Alias MY_HOST = host1\n",
+            :order   => "30"
+          })
+        end
       end#no params
+
+      context 'when called with ensure set to absent' do
+        let (:title) { 'my_host'}
+        let (:params) {{ 'where' => 'host1', 'ensure' => 'absent'}}
+        it 'should not create our sudo::register' do
+          should_not contain_sudo__register("host_my_host").with({
+            :ensure  => "present",
+            :content => "Host_Alias MY_HOST = host1\n",
+            :order   => "30"
+          })
+        end
+      end#no params
+
+      context 'when called with an array of where' do
+        let (:title) { 'my_host'}
+        let (:params) {{ 'where' => ['host1','host2']}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("host_my_host").with({
+            :ensure  => "present",
+            :content => "Host_Alias MY_HOST = host1, host2\n",
+            :order   => "30"
+          })
+        end
+      end#no params
+
+      context 'when called with a comment' do
+        let (:title) { 'my_host'}
+        let (:params) {{ 'where' => ['host1','host2'], 'comment' => 'blah blah'}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("host_my_host").with({
+            :ensure  => "present",
+            :content => "#\n# blah blah\nHost_Alias MY_HOST = host1, host2\n",
+            :order   => "30"
+          })
+        end
+      end#comment
 
     end
   end

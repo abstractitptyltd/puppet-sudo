@@ -27,19 +27,53 @@ describe 'sudo::runas', :type => :define do
         })
       end
 
-      context 'when fed no parameters' do
-        # let (:title) { 'my_cmnd'}
-        # let (:params) {{ 'what' => 'my_val','cmnd' => 'my_command', 'ensure' => 'present', 'comment' => 'blah blah'}}
-        # it 'should lay down our fact file as expected' do
-        #   should contain_file("#{facterbasepath}/facts.d/my_fact.yaml").with({
-        #     :path=>"#{facterbasepath}/facts.d/my_fact.yaml",
-        #     :ensure=>"present",
-        #     :owner=>"root",
-        #     :group=>"puppet",
-        #     :mode=>"0640"
-        #   }).with_content("# custom fact my_fact\n---\nmy_fact: \"my_val\"\n")
-        # end
-      end#no params
+      context 'when called with base options' do
+        let (:title) { 'bob'}
+        let (:params) {{ 'who' => 'run_user'}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("runas_bob").with({
+            :ensure  => "present",
+            :content => "Runas_Alias BOB = run_user\n",
+            :order   => "30"
+          })
+        end
+      end#base options
+
+      context 'when called with ensure set to absent' do
+        let (:title) { 'bob'}
+        let (:params) {{ 'who' => 'run_user', 'ensure' => 'absent'}}
+        it 'should not create our sudo::register' do
+          should_not contain_sudo__register("runas_bob").with({
+            :ensure  => "present",
+            :content => "Runas_Alias BOB = run_user\n",
+            :order   => "30"
+          })
+        end
+      end#absent
+
+      context 'when called with an array of who' do
+        let (:title) { 'bob'}
+        let (:params) {{ 'who' => ['run_user1','run_user2']}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("runas_bob").with({
+            :ensure  => "present",
+            :content => "Runas_Alias BOB = run_user1, run_user2\n",
+            :order   => "30"
+          })
+        end
+      end#array of who
+
+      context 'when called with comment' do
+        let (:title) { 'bob'}
+        let (:params) {{ 'who' => ['run_user1','run_user2'], 'comment' => 'blah blah'}}
+        it 'should create our sudo::register as expected' do
+          should contain_sudo__register("runas_bob").with({
+            :ensure  => "present",
+            :content => "#\n# blah blah\nRunas_Alias BOB = run_user1, run_user2\n",
+            :order   => "30"
+          })
+        end
+      end#base options
 
     end
   end
