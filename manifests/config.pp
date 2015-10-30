@@ -12,8 +12,8 @@ class sudo::config {
   $rulesfile = $sudo::rulesfile
 
   concat{$rulesfile:
-    owner => root,
-    group => root,
+    owner => 'root',
+    group => 'root',
     mode  => '0440',
   }
   sudo::register{ 'sudo_header':

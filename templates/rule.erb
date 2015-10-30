@@ -1,6 +1,5 @@
-
-<% if @comment -%>
+<% if @comment != '' -%>
 #
 # <%= @comment %>
 <% end -%>
-<%= @who %> <%= @servers %> = (<%= @runas %>) <% if @nopass == true %>NOPASSWD:<% end %><% if @setenv == true %>SETENV:<% end %> <%= @commands.class == Array ? @commands.join(", ") : @commands %>
+<%= @who %> <%= @servers.class == Array ? @servers.join(", ") : @servers %> = (<%= @runas.class == Array ? @runas.join(", ") : @runas %>) <% if @nopass == true %>NOPASSWD:<% end %><% if @setenv == true %>SETENV:<% end %> <%= @commands.class == Array ? @commands.join(", ") : @commands %>
