@@ -2,4 +2,21 @@
 #
 # <%= @comment %>
 <% end -%>
+<%
+if @commands.class == Array
+    tmp = []
+    tmp_last = []
+    @commands.each do |item|
+        if item == "ALL"
+            tmp.unshift(item)
+        elsif item.start_with?("!")
+            tmp_last.push(item)
+        else
+            tmp.push(item)
+        end
+    end
+    tmp += tmp_last
+    @commands = tmp
+end
+-%>
 <%= @who %> <%= @servers.class == Array ? @servers.join(", ") : @servers %> = (<%= @runas.class == Array ? @runas.join(", ") : @runas %>) <% if @nopass == true %>NOPASSWD:<% end %><% if @setenv == true %>SETENV:<% end %> <%= @commands.class == Array ? @commands.join(", ") : @commands %>
