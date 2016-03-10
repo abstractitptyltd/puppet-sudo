@@ -188,6 +188,30 @@ Host or array of hosts in this group
 
 Description of this host group
 
+    sudo::line { "Icinga-no-tty":
+      ensure => present, # whether the rule should exist or not (present is the default)
+      line => 'Defaults:icinga !requiretty', # can also be an array of hosts
+      comment => "enable access for icinga without requiring tty",
+    }
+
+### sudo::line
+
+This type manages pre-formatted lines to be inserted to sudoers
+
+**Parameters within sudo::line**
+
+#### `ensure`
+
+Whether the specific line should exist or not (present is the default)
+
+#### `line`
+
+Optional content of the line to be managed
+
+#### `comment`
+
+Optional description which is inserted befor the line
+
     sudo::runas { "whoever":
       ensure => present, # whether the rule should exist or not (present is the default)
       who => 'bob', # can also be an array of users
