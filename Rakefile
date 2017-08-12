@@ -11,15 +11,13 @@ end
 
 PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.relative = true
-PuppetLint.configuration.send('disable_80chars')
+PuppetLint.configuration.send('disable_140chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 # PuppetLint.configuration.send('disable_class_parameter_defaults')
 PuppetLint.configuration.send('disable_documentation')
 PuppetLint.configuration.send('disable_single_quote_string_with_variables')
-PuppetLint.configuration.log_format = "%{path}:%{linenumber}:%{check}:%{KIND}:%{message}"
-
-PuppetLint.configuration.send('disable_selector_inside_resource')
 PuppetLint.configuration.send('disable_empty_string_assignment')
+PuppetLint.configuration.send('disable_selector_inside_resource')
 
 exclude_paths = [
   "pkg/**/*",
