@@ -29,9 +29,6 @@ matrix:
     env: PUPPET_VERSION="~> 4.1.0" STRICT_VARIABLES=true
   - rvm: 2.0
     env: PUPPET_VERSION="~> 4.2.0" STRICT_VARIABLES=true
-notifications:
-  slack:
-    secure: Bgqq8f5Ej+g78Iy8o0HSexx4OyCrO2eNrSiev8O8FCB2zQSNZ82EUnuXwDq5LeHJZb3eTBM/6NcAYeXRNuHwgniQQef9xiHC8uBvV3pMstAe5pa+9l7OaXzKyMrVhbjUfqZUhnRYPHY+OYgUMb4UfotfxvRCduPj1YhMrSVXocs=
 deploy:
   provider: puppetforge
   user: abstractit
