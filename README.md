@@ -51,10 +51,10 @@ These are class variables so use hiera or and ENC to set them up easily.
 Using sudo class
 
     $sudo::sudoers_dot_d = false
-    # Whether to file in include sudoers.d 
+    # Whether to file in include sudoers.d
     $sudo::full_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
     # group of users with full sudo access
-    $sudo::extra_full_sudo_users = [] 
+    $sudo::extra_full_sudo_users = []
     # array of extra users with full sudo access except shells and su itself
     $sudo::requiretty = false
     # whether you want a tty to exist for sudo ( I leave this unset because my monitoring setup uses sudo for some of it's commands )
@@ -71,10 +71,10 @@ Using sudo::params class variables.
 This method will go away soon so please migrate to using sudo variables
 
     $sudo::params::sudoers_dot_d = false
-    # Whether to file in include sudoers.d 
+    # Whether to file in include sudoers.d
     $sudo::params::full_fullaccess_group = $::operatingsystem ? { default => 'wheel', Debian => 'adm', Ubuntu => 'admin' }
     # group of users with full sudo access
-    $sudo::params::extra_full_sudo_users = [] 
+    $sudo::params::extra_full_sudo_users = []
     # array of extra users with full sudo access except shells and su itself
     $sudo::params::requiretty = false
     # whether you want a tty to exist for sudo ( I leave this unset because my monitoring setup uses sudo for some of it's commands )
@@ -91,8 +91,8 @@ Usage
 -----
 
     sudo::rule { "extra_rule":
-      ensure   => present, 
-      who      => 'bob', 
+      ensure   => present,
+      who      => 'bob',
       runas    => 'root', # default runas user is root, please change to override.
       commands => "/usr/sbin/systemctl",
       nopass   => false, #
@@ -234,7 +234,7 @@ who this group contains, can be a variable or an array
 
 #### `comment`
 
-Description of this runas group 
+Description of this runas group
 
 
 Implementation
@@ -252,31 +252,3 @@ Development
 
 All development, testing and releasing is done by me at this stage.
 If you wish to join in let me know.
-
-Release Notes
--------------
-
-**1.2.0**
-
-Bugfixes: template variables (@bobtfish and @rfay)
-Bugfix: extra_shells wasn't adding a , for path separation (@rendhalver)
-Adding support for secure_path and env_reset (@bobtfish)
-Adding support for setenv in sudo::rule (@aholen)
-Adding support for sudoers.d (@rendhalver)
-Allowing an array of commands in sudo::rule
-Initial changes to move away from params being the primary API
-Adding metadata.json to work with newer versions of puppet module
-
-**1.1.3**
-
-updated documentation for sudo::rule
-fixed mode for /etc/sudoers file to stop constant changes
-
-**1.1.2**
-
-moved `sudo_fullaccess_group` into class vars for sudo::params
-include sudo in sudo::register class to make sure it gets loaded
-
-**1.0.0**
-
-Initial release
